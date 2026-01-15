@@ -13,6 +13,7 @@
     <AssemblyName>KeraLua</AssemblyName>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

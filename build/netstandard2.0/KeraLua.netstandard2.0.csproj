@@ -6,6 +6,7 @@
       <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
       <SignAssembly>true</SignAssembly>
       <Configurations>Release;Debug</Configurations>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
       <DebugType>portable</DebugType>
