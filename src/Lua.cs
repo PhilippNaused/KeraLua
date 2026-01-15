@@ -1384,29 +1384,30 @@ namespace KeraLua
         /// <returns></returns>
         public byte[] ToBuffer(int index, bool callMetamethod)
         {
-            UIntPtr len;
-            IntPtr buff;
-
-            if (callMetamethod)
-            {
-                buff = NativeMethods.luaL_tolstring(_luaState, index, out len);
-                Pop(1);
-            }
-            else
-            {
-                buff = NativeMethods.lua_tolstring(_luaState, index, out len);
-            }
+            IntPtr buff = GetBufferPointer(index, callMetamethod, out UIntPtr len);
 
             if (buff == IntPtr.Zero)
                 return null;
 
             int length = (int)len;
             if (length == 0)
-                return new byte[0];
+                return Array.Empty<byte>();
 
             byte[] output = new byte[length];
             Marshal.Copy(buff, output, 0, length);
             return output;
+        }
+
+        IntPtr GetBufferPointer(int index, bool callMetamethod, out UIntPtr length)
+        {
+            if (callMetamethod)
+            {
+                IntPtr buff = NativeMethods.luaL_tolstring(_luaState, index, out length);
+                Pop(1);
+                return buff;
+            }
+
+            return NativeMethods.lua_tolstring(_luaState, index, out length);
         }
 
         /// <summary>
@@ -1418,18 +1419,19 @@ namespace KeraLua
         {
             return ToString(index, true);
         }
+
         /// <summary>
         /// Converts the Lua value at the given index to a C# string
         /// </summary>
         /// <param name="index"></param>
         /// <param name="callMetamethod">Calls __tostring field if present</param>
         /// <returns></returns>
-        public string ToString(int index, bool callMetamethod)
+        public unsafe string ToString(int index, bool callMetamethod)
         {
-            byte[] buffer = ToBuffer(index, callMetamethod);
-            if (buffer == null)
+            IntPtr buffer = GetBufferPointer(index, callMetamethod, out UIntPtr len);
+            if (buffer == IntPtr.Zero)
                 return null;
-            return Encoding.GetString(buffer);
+            return Encoding.GetString((byte*)buffer, (int)len);
         }
 
         /// <summary>
@@ -1696,7 +1698,7 @@ namespace KeraLua
 
             int length = (int)len;
             if (length == 0)
-                return new byte[0];
+                return Array.Empty<byte>();
 
             byte[] output = new byte[length];
             Marshal.Copy(buff, output, 0, length);
