@@ -1,57 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\targets\BuildLua.Common.props" />
   <PropertyGroup>
-   <LangVersion>7.0</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C45805A8-6436-4738-BD9F-4632EEA63BBC}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>KeraLua</RootNamespace>
-    <AssemblyName>KeraLua</AssemblyName>
+    <TargetFramework>net46</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\lib\Debug\net46\</OutputPath>
-    <DefineConstants>DEBUG;NETFRAMEWORK</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ConsolePause>false</ConsolePause>
-    <DocumentationFile>..\..\lib\Debug\net46\KeraLua.xml</DocumentationFile>
+    <OutputPath>..\..\lib\$(Configuration)\</OutputPath>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <DebugType>portable</DebugType>
-    <OutputPath>..\..\lib\Release\net46\</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\lib\Release\net46\KeraLua.xml</DocumentationFile>
-    <DefineConstants>NETFRAMEWORK</DefineConstants>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.14.0" Condition="'$(VisualStudioVersion)' > '16.2'" >
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.14.0" Condition="'$(VisualStudioVersion)' &gt; '16.2'">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" Condition="'$(VisualStudioVersion)' > '16.2'">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0" Condition="'$(VisualStudioVersion)' &gt; '16.2'">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.14.0" Condition="'$(VisualStudioVersion)' > '16.2'">
+    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.14.0" Condition="'$(VisualStudioVersion)' &gt; '16.2'">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -65,7 +33,6 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="..\..\src\KeraLua.Core.projitems" Label="Shared" Condition="Exists('..\..\src\KeraLua.Core.projitems')" />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\targets\BuildLua.Windows.targets" />
   <Import Project="..\targets\BuildLua.OSX.targets" />
   <Import Project="..\targets\BuildLua.Linux.targets" />
