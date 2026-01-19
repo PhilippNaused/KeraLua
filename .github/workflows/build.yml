@@ -25,6 +25,9 @@ jobs:
     - name: 🛠️ Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    - name: 🔧 Restore workloads
+      run: dotnet workload restore
+
     - name: 🔧 Restore KeraLua.sln
       run: NuGet restore KeraLua.sln
 
@@ -71,6 +74,9 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: 9.0.x
+
+    - name: 🔧 Install Mono
+      run: sudo apt-get install -y mono-devel
 
     - name: 🔨 Build KeraLua.sln
       run: dotnet build KeraLua.sln
