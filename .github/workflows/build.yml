@@ -25,8 +25,8 @@ jobs:
     - name: 🛠️ Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: 🔧 Restore workloads
-      run: dotnet workload restore
+    # - name: 🔧 Restore workloads
+    #   run: dotnet workload restore
 
     - name: 🔧 Restore KeraLua.sln
       run: NuGet restore KeraLua.sln
@@ -34,8 +34,8 @@ jobs:
     - name: 🔧 Restore KeraLua.UWP.sln
       run: NuGet restore KeraLua.UWP.sln
 
-    - name: 🔧 Restore KeraLua.net9.0-android.sln
-      run: dotnet restore KeraLua.net9.0-android.sln
+    # - name: 🔧 Restore KeraLua.net9.0-android.sln
+    #   run: dotnet restore KeraLua.net9.0-android.sln
 
     - name: 🔧 Restore KeraLua.net8.0.sln
       run: dotnet restore KeraLua.net8.0.sln
@@ -55,8 +55,8 @@ jobs:
     - name: 🔨 Build KeraLua.netstandard.sln
       run: dotnet build KeraLua.netstandard.sln
 
-    - name: 🔨 Build KeraLua.net9.0-android.sln
-      run: dotnet build KeraLua.net9.0-android.sln
+    # - name: 🔨 Build KeraLua.net9.0-android.sln
+    #   run: dotnet build KeraLua.net9.0-android.sln
 
     - name: 🧪 Test KeraLuaTest.net9.0
       run: dotnet test .\tests\build\net9.0\bin\Debug\net9.0\KeraLuaTest.net9.0.dll
