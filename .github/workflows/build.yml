@@ -1,0 +1,91 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build-windows:
+
+    runs-on: windows-latest
+    steps:
+    - name: ⤵️ Checkout
+      uses: actions/checkout@v6
+      with:
+        submodules: true
+
+    - name: 🛠️ Setup .NET SDK
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 9.0.x
+
+    - name: 🛠️ Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    # - name: 🔧 Restore workloads
+    #   run: dotnet workload restore
+
+    - name: 🔧 Restore KeraLua.sln
+      run: NuGet restore KeraLua.sln
+
+    - name: 🔧 Restore KeraLua.UWP.sln
+      run: NuGet restore KeraLua.UWP.sln
+
+    # - name: 🔧 Restore KeraLua.net9.0-android.sln
+    #   run: dotnet restore KeraLua.net9.0-android.sln
+
+    - name: 🔧 Restore KeraLua.net8.0.sln
+      run: dotnet restore KeraLua.net8.0.sln
+
+    - name: 🔧 Restore KeraLua.netstandard.sln
+      run: dotnet restore KeraLua.netstandard.sln
+
+    - name: 🔨 Build KeraLua.sln
+      run: MSBuild KeraLua.sln
+
+    - name: 🔨 Build KeraLua.UWP.sln
+      run: MSBuild KeraLua.UWP.sln
+
+    - name: 🔨 Build KeraLua.net8.0.sln
+      run: dotnet build KeraLua.net8.0.sln
+
+    - name: 🔨 Build KeraLua.netstandard.sln
+      run: dotnet build KeraLua.netstandard.sln
+
+    # - name: 🔨 Build KeraLua.net9.0-android.sln
+    #   run: dotnet build KeraLua.net9.0-android.sln
+
+    - name: 🧪 Test KeraLuaTest.net9.0
+      run: dotnet test .\tests\build\net9.0\bin\Debug\net9.0\KeraLuaTest.net9.0.dll
+
+  build-linux:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: ⤵️ Checkout
+      uses: actions/checkout@v6
+      with:
+        submodules: true
+
+    - name: 🛠️ Setup .NET SDK
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: 9.0.x
+
+    - name: 🔧 Install Mono
+      run: sudo apt-get install -y mono-devel
+
+    - name: 🔨 Build KeraLua.sln
+      run: dotnet build KeraLua.sln
+
+    - name: 🔨 Build KeraLua.net8.0.sln
+      run: dotnet build KeraLua.net8.0.sln
+
+    - name: 🔨 Build KeraLua.netstandard.sln
+      run: dotnet build KeraLua.netstandard.sln
+
+    - name: 🧪 Test KeraLuaTest.net9.0
+      run: dotnet test ./tests/build/net9.0/bin/Debug/net9.0/KeraLuaTest.net9.0.dll
